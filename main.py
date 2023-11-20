@@ -48,4 +48,4 @@ def NewEtudiantsFromCSV(filename):
 
 
 anniv1 = Date("07/06/2000")
-#anniv2 = Date("07", "06", "2000")
+print(anniv1)
