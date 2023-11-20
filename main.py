@@ -47,5 +47,5 @@ def NewEtudiantsFromCSV(filename):
 # NewEtudiantsFromCSV("C:/Users/coren/OneDrive/Documents/Polytech/Cours/5a/S9/Python/fichetu.csv")
 
 
-anniv1 = Date("07/06/2000")
-#anniv2 = Date("07", "06", "2000")
+#anniv1 = Date("07/06/2000")
+anniv2 = Date("07","06","2000")

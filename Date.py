@@ -5,9 +5,9 @@ class Date:
         self.annee = annee
 
     def __init__(self, date):
-        date.split("/")
-        self.jour = date[0]
-        self.mois = date[1]
+        split = date.split("/")
+        self.jour = split[0]
+        self.mois = split[1]
         self.annee = date[2]
 
     def __eq__(self, other):
