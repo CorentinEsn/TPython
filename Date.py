@@ -23,3 +23,6 @@ class Date:
                 if self.jour < other.jour:
                     return True
         return False
+
+    def __str__(self):
+        return "{}/{}/{}".format(self.jour, self.mois, self.annee)
