@@ -8,7 +8,7 @@ class Date:
         split = date.split("/")
         self.jour = split[0]
         self.mois = split[1]
-        self.annee = date[2]
+        self.annee = split[2]
 
     def __eq__(self, other):
         return self.jour == other.jour and self.mois == other.mois and self.annee == other.annee
@@ -23,6 +23,3 @@ class Date:
                 if self.jour < other.jour:
                     return True
         return False
-
-    def Afficher(self):
-        print("Date : {}/{}/{}".format(self.jour, self.mois, self.annee))
