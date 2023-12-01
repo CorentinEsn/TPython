@@ -9,6 +9,8 @@ class CalculatorApp:
         self.display_var = tk.StringVar()
         self.display_var.set("")
 
+        self.col = 3
+        self.row = 0
         self.scientific_mode = False
 
         self.create_widgets()
@@ -63,6 +65,19 @@ class CalculatorApp:
 
     def create_buttons(self):
         self.clear_and_create_buttons()
+        for button in buttons:
+            if button == '':
+                tk.Button(self.master, state="disabled", padx=20, pady=20).grid(row=row_val, column=col_val, sticky="nsew")
+            else:
+                tk.Button(self.master, text=button, padx=20, pady=20, command=lambda b=button: self.on_button_click(b)).grid(
+                    row=row_val, column=col_val, sticky="nsew")
+            col_val += 1
+            if col_val > self.col:
+                col_val = 0
+                row_val += 1
+        self.row = row_val
+
+
 
     def on_button_click(self, button):
         current_display = self.display_var.get()
@@ -104,4 +119,8 @@ class CalculatorApp:
 if __name__ == "__main__":
     root = tk.Tk()
     app = CalculatorApp(root)
+    for i in range(app.row):
+        root.rowconfigure(i, weight=1)
+    for i in range(app.col+1):
+        root.columnconfigure(i, weight=1)
     root.mainloop()
