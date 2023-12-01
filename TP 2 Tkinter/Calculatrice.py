@@ -57,27 +57,28 @@ class CalculatorApp:
                 widget.destroy()
 
         # Crée les nouveaux boutons
-        for i, row in enumerate(self.button_layout):
-            for j, button in enumerate(row):
+        row_val = 1
+        col_val = 0
+        for button_row in self.button_layout:
+            for button in button_row:
                 if self.scientific_mode or button not in ['sqrt', '^', 'sin', 'cos', 'tan', '(', ')']:
-                    tk.Button(self.master, text=button, padx=20, pady=20,
-                              command=lambda b=button: self.on_button_click(b)).grid(row=i+1, column=j, sticky="nsew")
+                    if button == '':
+                        tk.Button(self.master, state="disabled", padx=20, pady=20).grid(row=row_val, column=col_val, sticky="nsew")
+                    else:
+                        tk.Button(self.master, text=button, padx=20, pady=20, command=lambda b=button: self.on_button_click(b)).grid(
+                            row=row_val, column=col_val, sticky="nsew")
+                    col_val += 1
+                    if col_val > self.col:
+                        col_val = 0
+                        row_val += 1
+        self.row = row_val
 
     def create_buttons(self):
         self.clear_and_create_buttons()
-        for button in buttons:
-            if button == '':
-                tk.Button(self.master, state="disabled", padx=20, pady=20).grid(row=row_val, column=col_val, sticky="nsew")
-            else:
-                tk.Button(self.master, text=button, padx=20, pady=20, command=lambda b=button: self.on_button_click(b)).grid(
-                    row=row_val, column=col_val, sticky="nsew")
-            col_val += 1
-            if col_val > self.col:
-                col_val = 0
-                row_val += 1
-        self.row = row_val
-
-
+        for i in range(self.row):
+            self.master.rowconfigure(i, weight=1)
+        for i in range(self.col+1):
+            self.master.columnconfigure(i, weight=1)
 
     def on_button_click(self, button):
         current_display = self.display_var.get()
@@ -119,8 +120,4 @@ class CalculatorApp:
 if __name__ == "__main__":
     root = tk.Tk()
     app = CalculatorApp(root)
-    for i in range(app.row):
-        root.rowconfigure(i, weight=1)
-    for i in range(app.col+1):
-        root.columnconfigure(i, weight=1)
     root.mainloop()
