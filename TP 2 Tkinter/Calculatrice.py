@@ -22,12 +22,18 @@ class CalculatorApp:
         display.grid(row=0, column=0, columnspan=4, sticky="nsew")
 
         # Boutons
-        self.button_layout = [
-            ['7', '8', '9', '/','sin'],
-            ['4', '5', '6', '*','cos'],
-            ['1', '2', '3', '-','tan'],
-            ['0', 'C', 'AC', '+','sqrt'],
-            ['=','(',')','^']
+        self.button_layout_std = [
+            ['+','-', '*', '/'],
+            ['7', '8', '9', 'C'],
+            ['4', '5', '6', 'AC'],
+            ['1', '2', '3', '='],
+            ['','0','','.']
+
+        ]
+
+        self.button_layout_sci = [
+            ['sin','cos','tan','sqrt'],
+            ['^','(',')']
         ]
 
         self.create_buttons()
@@ -59,9 +65,12 @@ class CalculatorApp:
         # Crée les nouveaux boutons
         row_val = 1
         col_val = 0
+        self.button_layout = self.button_layout_std
+        if self.scientific_mode:
+            self.button_layout = self.button_layout_std + self.button_layout_sci
         for button_row in self.button_layout:
             for button in button_row:
-                if self.scientific_mode or button not in ['sqrt', '^', 'sin', 'cos', 'tan', '(', ')']:
+                #if self.scientific_mode or button not in ['sqrt', '^', 'sin', 'cos', 'tan', '(', ')']:
                     if button == '':
                         tk.Button(self.master, state="disabled", padx=20, pady=20).grid(row=row_val, column=col_val, sticky="nsew")
                     else:
