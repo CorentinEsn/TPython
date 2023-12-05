@@ -9,26 +9,27 @@ def HelloWorld():
 
 def OpenAndAppendFile():
 
-    # Choix du fichier à ouvrir
-    print("Choisissez un fichier à ouvrir :")
-    filename = input("> ")
-    fic = open(filename, "at")
+    try:
+        # Choix du fichier à ouvrir
+        print("Choisissez un fichier à ouvrir :")
+        filename = input("> ")
+        fic = open(filename, "at")
 
-    # Ajout du texte
-    print("Texte à ajouter :")
-    text = input("> ")
-    fic.write(text + "/n")
-    fic.close()
+        # Ajout du texte
+        print("Texte à ajouter :")
+        text = input("> ")
+        fic.write(text + "/n")
+        fic.close()
 
-    # Affichage du contenu du fichier
-    print("Le fichier contient le texte suivant :")
-    fic = open(filename, "r")
-    print(fic.read())
-    fic.close()
+        # Affichage du contenu du fichier
+        print("Le fichier contient le texte suivant :")
+        fic = open(filename, "r")
+        print(fic.read())
+        fic.close()
 
-    # Vider le fichier
-    fic = open(filename, "wt")
-    fic.close()
+        # Vider le fichier
+        fic = open(filename, "wt")
+        fic.close()
 
     except FileNotFoundError:
         print(f"Le fichier '{filename}' n'a pas été trouvé.")
@@ -36,6 +37,7 @@ def OpenAndAppendFile():
         print(f"Une erreur s'est produite : {e}")
     finally:
         print("Opération terminée.")
+
 
 # Liste des étudiants depuis un fichier CSV
 def NewEtudiantsFromCSV(filename):
