@@ -40,10 +40,13 @@ def NewEtudiantsFromCSV(filename):
         etudiants.append(Etudiant(line[0], line[1], Date((line[2]))))
     fic.close()
     return etudiants
-
-
+'''
 # Construction de la liste et affichage des étudiants
 Etudiants = NewEtudiantsFromCSV("TP 1/fichetu.csv")
 for etudiant in Etudiants:
     print(etudiant)
+'''
+
+print(Etudiant("DUPONT", 8, Date("01/01/2000")).adresselec())
+print(Etudiant("DUPONT", '', Date("01/01/2000")).adresselec())
 
