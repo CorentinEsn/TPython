@@ -43,7 +43,7 @@ def NewEtudiantsFromCSV(filename):
 
 
 # Construction de la liste et affichage des étudiants
-Etudiants = NewEtudiantsFromCSV("C:/Users/coren/OneDrive/Documents/Polytech/Cours/5a/S9/Python/fichetu.csv")
+Etudiants = NewEtudiantsFromCSV("TP 1/fichetu.csv")
 for etudiant in Etudiants:
     print(etudiant)
 
