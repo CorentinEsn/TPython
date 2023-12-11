@@ -10,11 +10,9 @@ class Etudiant:
 
         try:
             # raise an error if the prenom is not a string
-            if type(self.prenom) != str or type(self.nom) != str:
-                raise TypeError("Le prénom et/ou le nom ne sont pas des chaînes de caractères")
+            assert type(self.prenom) == str and type(self.nom) == str, "Le prénom et/ou le nom ne sont pas des chaînes de caractères"
             # raise an error if the prenom or nom is null
-            if self.prenom == '' or self.nom == '':
-                raise Exception("Le prénom et/ou le nom ne peuvent pas être nuls")
+            assert self.prenom != '' and self.nom != '', "Le prénom et/ou le nom ne peuvent pas être vides"
 
             mail = self.prenom + "." + self.nom + "@etu.univ-tours.fr"
 
