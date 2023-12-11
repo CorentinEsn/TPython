@@ -41,26 +41,20 @@ def pie():
 def la3d():
     plt.style.use('_mpl-gallery')
 
-    n_radii = 8
-    n_angles = 36
+    # Make data
+    X = np.arange(-5, 5, 0.25)
+    Y = np.arange(-5, 5, 0.25)
+    X, Y = np.meshgrid(X, Y)
+    R = np.sqrt(X ** 2 + Y ** 2)
+    Z = np.cos(R) * Y *X
 
-    # Make radii and angles spaces
-    radii = np.linspace(0.125, 1.0, n_radii)
-    angles = np.linspace(0, 2 * np.pi, n_angles, endpoint=False)[..., np.newaxis]
-
-    # Convert polar (radii, angles) coords to cartesian (x, y) coords.
-    x = np.append(0, (radii * np.cos(angles)).flatten())
-    y = np.append(0, (radii * np.sin(angles)).flatten())
-    z = np.sin(-x * y)
-
-    # Plot
-    fig, ax = plt.subplots(subplot_kw={'projection': '3d'})
-    ax.plot_trisurf(x, y, z, vmin=z.min() * 2, cmap=cm.Blues)
+    # Plot the surface
+    fig, ax = plt.subplots(subplot_kw={"projection": "3d"})
+    ax.plot_surface(X, Y, Z, vmin=Z.min() * 2, cmap=cm.Blues)
 
     ax.set(xticklabels=[],
            yticklabels=[],
            zticklabels=[])
 
     plt.show()
-
 la3d()
