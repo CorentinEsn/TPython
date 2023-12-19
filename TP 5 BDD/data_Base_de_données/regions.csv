@@ -1,10 +1,3 @@
-Populations légales des régions en vigueur au 1er janvier 2016;;;;;;
-Mise à jour : décembre 2015;;;;;;
-en habitant;;;;;;
-Champ : France métropolitaine, départements d’outre-mer de la Guadeloupe, de la Guyane, de la Martinique et de La Réunion, limites territoriales en vigueur au 1er janvier 2015;;;;;;
-Date de référence statistique : 1er janvier 2013;;;;;;
-Source :;Insee, Recensement de la population 2013;;;;;
-;;;;;;
 Code région;Nom de la région;Nombre d'arrondissements;Nombre de cantons;Nombre de communes;Population municipale;Population totale
 42;Alsace;9;40;904;1 868 183;1 903 801
 72;Aquitaine;19;121;2 296;3 316 889;3 406 433
@@ -16,15 +9,15 @@ Code région;Nom de la région;Nombre d'arrondissements;Nombre de cantons;Nombre d
 21;Champagne-Ardenne;15;76;1 953;1 339 008;1 375 674
 94;Corse;5;26;360;320 208;325 510
 43;Franche-Comté;9;62;1 784;1 177 096;1 213 499
-01;Guadeloupe;2;21;32;402 119;409 055
-03;Guyane;2;;22;244 118;246 507
+1;Guadeloupe;2;21;32;402 119;409 055
+3;Guyane;2;;22;244 118;246 507
 23;Haute-Normandie;6;58;1 420;1 849 652;1 892 928
 11;Île-de-France;25;155;1 280;11 959 807;12 116 367
-04;La Réunion;4;25;24;835 103;844 741
+4;La Réunion;4;25;24;835 103;844 741
 91;Languedoc-Roussillon;14;97;1 545;2 729 721;2 789 059
 74;Limousin;8;55;747;737 509;759 577
 41;Lorraine;16;84;2 339;2 345 197;2 400 402
-02;Martinique;4;;34;385 551;391 837
+2;Martinique;4;;34;385 551;391 837
 73;Midi-Pyrénées;22;152;3 020;2 954 157;3 038 568
 31;Nord-Pas-de-Calais;13;80;1 545;4 060 741;4 127 229
 52;Pays de la Loire;17;107;1 491;3 660 852;3 765 802
