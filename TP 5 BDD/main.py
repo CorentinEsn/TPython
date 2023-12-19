@@ -22,6 +22,8 @@ def SQLConnectAndInsert(name, table):
     for line in table[1:]:
         print(str(line)[1:-1])
         cur.execute("INSERT INTO " +name+" VALUES ("+str(line)[1:-1]+")")
+    connect.commit()
+    connect.close()
 
 def readTable(path):
     try:
