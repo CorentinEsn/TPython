@@ -14,18 +14,22 @@ def SQLConnectAndInsert(name, table):
         create = input("Do you want to create it ? Y/N : ")
         if create == "Y" or create == "y":
             attributes = str(table[0])[1:-1]  # return list content without []
+            print(str(table[0])[1:-1])
             cur.execute("CREATE TABLE " + name + "(" + attributes + ")")
         else:
             return -1
     # insert the data
     for line in table[1:]:
+        print(str(line)[1:-1])
         cur.execute("INSERT INTO " +name+" VALUES ("+str(line)[1:-1]+")")
-    cur.commit()
 
 def readTable(path):
     try:
         # Essayez avec l'encodage latin-1
         df_csv = pd.read_csv(path, sep=';', encoding='latin-1', header=None, skiprows=0)
+
+        # Remplacer les valeurs vides par "/"
+        df_csv.fillna("", inplace=True)
 
         # Convertir le DataFrame en une liste de listes
         tableau_de_tableaux = df_csv.values.tolist() if not df_csv.empty else None
@@ -38,4 +42,5 @@ def readTable(path):
         return None
 
 # Exemple d'utilisation
-file = readTable("data_Base_de_données/regions.csv")
+file = readTable("data_Base_de_données/communes.csv")
+SQLConnectAndInsert("Communes", file)
