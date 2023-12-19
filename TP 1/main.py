@@ -8,24 +8,28 @@ def HelloWorld():
         print(f"Une erreur s'est produite : {e}")
 
 def OpenAndAppendFile():
+
     try:
         # Choix du fichier à ouvrir
         print("Choisissez un fichier à ouvrir :")
         filename = input("> ")
-        with open(filename, "at") as fic:
-            # Ajout du texte
-            print("Texte à ajouter :")
-            text = input("> ")
-            fic.write(text + "/n")
+        fic = open(filename, "at")
+
+        # Ajout du texte
+        print("Texte à ajouter :")
+        text = input("> ")
+        fic.write(text + "/n")
+        fic.close()
 
         # Affichage du contenu du fichier
         print("Le fichier contient le texte suivant :")
-        with open(filename, "r") as fic:
-            print(fic.read())
+        fic = open(filename, "r")
+        print(fic.read())
+        fic.close()
 
         # Vider le fichier
-        with open(filename, "wt"):
-            pass
+        fic = open(filename, "wt")
+        fic.close()
 
     except FileNotFoundError:
         print(f"Le fichier '{filename}' n'a pas été trouvé.")
@@ -34,6 +38,8 @@ def OpenAndAppendFile():
     finally:
         print("Opération terminée.")
 
+
+# Liste des étudiants depuis un fichier CSV
 def NewEtudiantsFromCSV(filename):
     etudiants = []  # Liste d'étudiants
     try:
@@ -62,3 +68,13 @@ try:
         print(etudiant)
 except Exception as e:
     print(f"Une erreur s'est produite : {e}")
+'''
+# Construction de la liste et affichage des étudiants
+Etudiants = NewEtudiantsFromCSV("TP 1/fichetu.csv")
+for etudiant in Etudiants:
+    print(etudiant)
+'''
+
+print(Etudiant("DUPONT", 8, Date("01/01/2000")).adresselec())
+print(Etudiant("DUPONT", '', Date("01/01/2000")).adresselec())
+
