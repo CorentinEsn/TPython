@@ -22,7 +22,6 @@ def SQLConnectAndInsert(name, table):
         cur.execute("INSERT INTO " +name+" VALUES ("+str(line)[1:-1]+")")
     cur.commit()
 
-
 def readTable(path):
     try:
         # Essayez avec l'encodage latin-1
