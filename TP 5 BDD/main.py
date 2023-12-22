@@ -2,9 +2,11 @@ import sqlite3 as sql
 import pandas as pd
 from re import sub
 
+
 def camel(s):
-  s = sub(r"(_|-)+", " ", s).title().replace(" ", "")
-  return ''.join([s[0].lower(), s[1:]])
+    s = sub(r"(_|-)+", " ", s).title().replace(" ", "")
+    return ''.join([s[0].lower(), s[1:]])
+
 
 # Create a SQL connection to our SQLite database
 def SQLConnectAndInsert(name, table):
@@ -58,17 +60,54 @@ def insertData():
     SQLConnectAndInsert("Regions", readTable("data_Base_de_données/regions.csv"))
 
 
+# return the total population of a table
 def totalPopulation(table):
     sum = 0
-    connect = sql.connect(table+".db")
+    connect = sql.connect(table + ".db")
     cur = connect.cursor()
-    res = cur.execute("SELECT PopulationTotale FROM "+table)
+    res = cur.execute("SELECT PopulationTotale FROM " + table)
     res = res.fetchall()
     for i in res:
         pop = i[0]
         pop = pop.replace(" ", "")
         sum += int(pop)
-    print(table+" total population : " + str(sum))
+    print(table + " total population : " + str(sum))
 
-totalPopulation("Departements")
-totalPopulation("Regions")
+
+# Returns list of communes with the same name but different departements
+def sameNameDifferentDepartement():
+    communes = []
+    connect = sql.connect("Communes.db")
+    cur = connect.cursor()
+    res = cur.execute("SELECT NomDeLaCommune FROM Communes GROUP BY NomDeLaCommune HAVING COUNT(*) > 1")
+    res = res.fetchall()
+    for i in res:
+        communes.append(i[0])
+    return communes
+
+
+# returns commune by name with list of departements of homonyms
+def getCommuneByName(name):
+    homonymes = []
+    connect = sql.connect("Communes.db")
+    cur = connect.cursor()
+    if "'" in name:
+        name = name.replace("'", "''")
+    res = cur.execute("SELECT NomDeLaCommune, CodeDépartement FROM Communes WHERE NomDeLaCommune = '" + name + "'")
+    res = res.fetchall()
+    homonymes.append(res[0][1])
+    for i in res:
+        if i[1] not in homonymes:
+            homonymes.append(i[1])
+    print("Homonymes de " + name + " : " + str(homonymes))
+    connect.close()
+
+
+#returns name and departement of homonyms
+def getHomonyms():
+    list = sameNameDifferentDepartement()
+    for i in list:
+        getCommuneByName(i)
+
+
+getHomonyms()
