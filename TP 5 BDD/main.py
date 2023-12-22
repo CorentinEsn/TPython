@@ -1,5 +1,10 @@
 import sqlite3 as sql
 import pandas as pd
+from re import sub
+
+def camel(s):
+  s = sub(r"(_|-)+", " ", s).title().replace(" ", "")
+  return ''.join([s[0].lower(), s[1:]])
 
 # Create a SQL connection to our SQLite database
 def SQLConnectAndInsert(name, table):
@@ -15,16 +20,18 @@ def SQLConnectAndInsert(name, table):
         if create == "Y" or create == "y":
             attributes = str(table[0])[1:-1]  # return list content without []
             print(str(table[0])[1:-1])
-            cur.execute("CREATE TABLE " + name + "(" + attributes + ")")
+            cur.execute("CREATE TABLE " + name + "(" + camel(attributes) + ")")
         else:
             return -1
     # insert the data
     for line in table[1:]:
         print(str(line)[1:-1])
-        cur.execute("INSERT INTO " +name+" VALUES ("+str(line)[1:-1]+")")
+        cur.execute("INSERT INTO " + name + " VALUES (" + str(line)[1:-1] + ")")
     connect.commit()
     connect.close()
 
+
+# reads an Excel table and returns a list of lists (table of data)
 def readTable(path):
     try:
         # Essayez avec l'encodage latin-1
@@ -43,6 +50,25 @@ def readTable(path):
         print(f"Erreur lors de la lecture du fichier CSV : {e}")
         return None
 
-# Exemple d'utilisation
-file = readTable("data_Base_de_données/communes.csv")
-SQLConnectAndInsert("Communes", file)
+
+# insert the data into the database
+def insertData():
+    SQLConnectAndInsert("Communes", readTable("data_Base_de_données/communes.csv"))
+    SQLConnectAndInsert("Departements", readTable("data_Base_de_données/departements.csv"))
+    SQLConnectAndInsert("Regions", readTable("data_Base_de_données/regions.csv"))
+
+
+def totalPopulation(table):
+    sum = 0
+    connect = sql.connect(table+".db")
+    cur = connect.cursor()
+    res = cur.execute("SELECT PopulationTotale FROM "+table)
+    res = res.fetchall()
+    for i in res:
+        pop = i[0]
+        pop = pop.replace(" ", "")
+        sum += int(pop)
+    print(table+" total population : " + str(sum))
+
+totalPopulation("Departements")
+totalPopulation("Regions")
