@@ -110,4 +110,7 @@ def getHomonyms():
         getCommuneByName(i)
 
 
-getHomonyms()
+# insertData()      # uncomment to insert data into the database (only once)
+totalPopulation("Departements")
+totalPopulation("Regions")
+#getHomonyms()
