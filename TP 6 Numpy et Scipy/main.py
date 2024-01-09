@@ -12,6 +12,7 @@ def NumFunctions():
 
 def ScipyFunctions():
     partScipy.curve()
+    partScipy.jpegReduce()
 
 
 NumFunctions()
