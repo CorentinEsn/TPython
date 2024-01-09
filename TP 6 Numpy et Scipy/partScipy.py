@@ -23,7 +23,7 @@ def curve():
 
 # open and resize a jpeg image
 def jpegReduce():
-    img = pil.Image.open("C:/Users/coren/OneDrive/Images/doge.jpg")
+    img = pil.Image.open("doge.jpg")
     img2 = img.resize((200, 200))
     img.show()
     img2.show()
