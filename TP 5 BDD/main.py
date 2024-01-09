@@ -1,6 +1,10 @@
+import os
 import sqlite3 as sql
 import pandas as pd
 from re import sub
+import xml.etree.ElementTree as ET
+import sqlite3 as sql
+
 
 def camel(s):
   s = sub(r"(_|-)+", " ", s).title().replace(" ", "")
@@ -58,6 +62,63 @@ def insertData():
     SQLConnectAndInsert("Regions", readTable("data_Base_de_données/regions.csv"))
 
 
+import os
+
+import os
+
+import os
+
+
+import os
+
+def sauvegardeXmlFile(fileName, table):
+    mode = "a" if os.path.exists(fileName + ".xml") else "w"
+
+    with open(fileName + ".xml", mode, encoding="utf-8") as file:
+        if mode == "w":
+            file.write("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n")
+
+
+        connect = sql.connect(table + ".db")
+        cur = connect.cursor()
+        res = cur.execute(f"SELECT * FROM {table}")
+        res = res.fetchall()
+
+        # Utiliser pandas pour obtenir les noms des colonnes
+        columns = [description[0] for description in cur.description]
+
+        for row in res:
+            file.write("\t<" + table + ">\n")
+            for col, value in zip(columns, row):
+                file.write(f"\t\t\t<{col}>{value}</{col}>\n")
+            file.write("\t</" + table + ">\n")
+
+    print("File " + fileName + ".xml updated")
+
+
+
+def importFromXmlFile(fileName):
+    tree = ET.parse(fileName + ".xml")
+    root = tree.getroot()
+
+    for table_element in root:
+        table_name = table_element.tag
+        table_data = []
+
+        for record_element in table_element:
+            record_data = {}
+            for field_element in record_element:
+                field_name = field_element.tag
+                field_value = field_element.text
+                record_data[field_name] = field_value
+
+            table_data.append(record_data)
+
+        SQLConnectAndInsert(table_name, table_data)
+
+    print("Data imported from " + fileName + ".xml")
+
+
 def totalPopulation(table):
     sum = 0
     connect = sql.connect(table+".db")
@@ -70,5 +131,11 @@ def totalPopulation(table):
         sum += int(pop)
     print(table+" total population : " + str(sum))
 
-totalPopulation("Departements")
-totalPopulation("Regions")
+#totalPopulation("Departements")
+#totalPopulation("Regions")
+insertData()
+sauvegardeXmlFile("sauvegardeDatabasesCommunes", "Communes")
+sauvegardeXmlFile("sauvegardeDatabasesDepartements", "Departements")
+sauvegardeXmlFile("sauvegardeDatabasesRegions", "Regions")
+
+#importFromXmlFile("sauvegardeDatabases")
