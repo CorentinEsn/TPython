@@ -1,0 +1,24 @@
+import matplotlib.pyplot as plt
+import scipy as sp
+import numpy as np
+import pillow as pl
+
+def func(x, a, b, c):
+    return a * np.exp(-b * x) + c
+
+
+def curve():
+    xdata = np.linspace(0, 4, 50)
+    y = func(xdata, 2.5, 1.3, 0.5)
+    rng = np.random.default_rng()
+    y_noise = 0.2 * rng.normal(size=xdata.size)
+    ydata = y + y_noise
+    plt.plot(xdata, ydata, 'b-', label='data')
+
+    popt, pcov = sp.optimize.curve_fit(func, xdata, ydata)
+    plt.plot(xdata, func(xdata, *popt), 'r-', label='fit')
+    plt.show()
+
+
+def jpegReduce():
+    pass
