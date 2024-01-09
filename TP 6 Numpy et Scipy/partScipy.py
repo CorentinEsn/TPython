@@ -1,7 +1,8 @@
 import matplotlib.pyplot as plt
 import scipy as sp
 import numpy as np
-import pillow as pl
+import PIL as pil
+
 
 def func(x, a, b, c):
     return a * np.exp(-b * x) + c
@@ -20,5 +21,9 @@ def curve():
     plt.show()
 
 
+# open and resize a jpeg image
 def jpegReduce():
-    pass
+    img = pil.Image.open("C:/Users/coren/OneDrive/Images/doge.jpg")
+    img2 = img.resize((200, 200))
+    img.show()
+    img2.show()
