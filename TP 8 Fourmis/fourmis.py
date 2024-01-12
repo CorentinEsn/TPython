@@ -3,4 +3,15 @@ class Fourmi:
         self.x = x
         self.y = y
         self.direction = direction
-        self.color = "black"
+        self.color = color
+
+    def move(self):
+        pass
+
+    def turn(self):
+        pass
+
+    def paint(self):
+        pass
+
+
