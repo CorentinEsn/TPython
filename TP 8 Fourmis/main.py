@@ -27,7 +27,7 @@ def main():
     ants = []
 
     # Génération initiale de fourmis
-    for _ in range(10):
+    for _ in range(100):
         ant = Fourmi(random.randint(0, width), random.randint(0, height),
                      random.randint(0, 360), red, ant_size)
         ants.append(ant)
@@ -43,8 +43,14 @@ def main():
             ant.move(screen)
 
             # Assurez-vous que les fourmis restent dans les limites de l'écran
-            ant.x = max(0, min(ant.x, width - 1))
-            ant.y = max(0, min(ant.y, height - 1))
+            if ant.x < 0 :
+                ant.x = width
+            if ant.x > width :
+                ant.x = 0
+            if ant.y < 0 :
+                ant.y = height
+            if ant.y > height:
+                ant.y = 0
 
         # Dessiner la plateforme et les fourmis
         screen.fill(bg_color)
