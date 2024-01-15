@@ -26,30 +26,43 @@ class Fourmi:
 
     def move(self, screen):
         self.turn(screen)
-        self.forward()
+        self.forward(screen)
         self.paint(screen)
 
+    def turn2(self, screen):
+        # Récupération des couleurs des cases voisines
+        couleur_voisins = []
+        height = screen.get_height()
+        width = screen.get_width()
+        for i in range(8):
+            x = (self.x + self.direction_table[i][0]) % width
+            y = (self.y + self.direction_table[i][1]) % height
+            couleur_voisins.append(screen.get_at((x, y)))
+
+        for couleur in couleur_voisins:
+            if couleur == self.color:
+                self.direction = couleur_voisins.index(couleur)
+                print("couleur")
+                break
+        else:
+            self.direction += random.choice([-1, 1])
+            self.direction %= 8
+            print("random")
+
     def turn(self, screen):
-        # Récupération des couleurs voisines
-
-        # Calcul de la distance aux couleurs voisines
-
-        # Choix de la couleur la plus proche
-        # Calcul de la direction
-        # Mise à jour de la direction
         self.direction += random.choice([-1, 1])
         self.direction %= 8
 
     def paint(self, screen):
         # Dessine la fourmi
-        #pygame.draw.circle(screen, self.color, (self.x, self.y), self.size)
-        # laisse une trace au bord de la fourmi
-        pygame.draw.circle(screen, self.color, (self.x + self.size * self.direction_table[self.direction][1], self.y + self.direction_table[self.direction][0]), self.size // 2)
+        pygame.draw.circle(screen, self.color, (self.x, self.y), self.size//2)
 
-    def forward(self):
-        speed = 10  # Ajustez la vitesse selon vos besoins
-        self.x += self.direction_table[self.direction][0] * speed
-        self.y += self.direction_table[self.direction][1] * speed
+    def forward(self, screen):
+        width = screen.get_width()
+        height = screen.get_height()
+        speed = 5  # Ajustez la vitesse selon vos besoins
+        self.x += (self.direction_table[self.direction][0] * speed)
+        self.y += (self.direction_table[self.direction][1] * speed)
 
     def erase(self, screen, bg_color):
         pygame.draw.circle(screen, bg_color, (self.x, self.y), self.size)

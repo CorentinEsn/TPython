@@ -7,7 +7,7 @@ from fourmis import Fourmi
 pygame.init()
 
 # Paramètres de la plateforme
-width, height = 1920, 1080
+width, height = 500, 500
 bg_color = (255, 255, 255)  # Couleur de fond
 
 # Paramètres des fourmis
@@ -26,8 +26,8 @@ def main():
     pygame.display.set_caption("Plateforme 2D pour les Fourmis")
 
     ants = []
-    nb_colonies = 2
-    taille_colonie = 70
+    nb_colonies = 5
+    taille_colonie = 10
     for i in range(nb_colonies):
         random.color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
         for _ in range(taille_colonie):
@@ -36,13 +36,17 @@ def main():
 
     while True:
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+            if event.type == pygame.QUIT or event.type == pygame.K_ESCAPE:
                 pygame.quit()
                 sys.exit()
+            if event.type == pygame.K_SPACE:
+                pygame.pause()
+
 
         # Déplacement des fourmis
         for ant in ants:
             ant.move(screen)
+            ant.paint(screen)
 
             # Assurez-vous que les fourmis restent dans les limites de l'écran
             if ant.x < 0 :
