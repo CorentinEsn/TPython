@@ -59,7 +59,7 @@ def main():
         pygame.display.flip()
 
         # Limiter la fréquence d'images
-        pygame.time.Clock().tick(2000)
+        pygame.time.Clock().tick(200)
 
 
 if __name__ == "__main__":
