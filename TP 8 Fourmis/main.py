@@ -2,6 +2,7 @@ import sys
 import random
 import pygame
 from fourmis import Fourmi
+from Colonie import Colonie
 
 # Initialisation de Pygame
 pygame.init()
@@ -25,14 +26,12 @@ def main():
     screen.fill(bg_color)
     pygame.display.set_caption("Plateforme 2D pour les Fourmis")
 
-    ants = []
+    colonies = []
     nb_colonies = 5
     taille_colonie = 10
     for i in range(nb_colonies):
         random.color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
-        for _ in range(taille_colonie):
-            ant = Fourmi(screen, random.color)
-            ants.append(ant)
+        colonies.append(Colonie(screen, random.color, taille_colonie))
 
     while True:
         for event in pygame.event.get():
@@ -44,20 +43,8 @@ def main():
 
 
         # Déplacement des fourmis
-        for ant in ants:
-            ant.move(screen)
-            ant.paint(screen)
-
-            # Assurez-vous que les fourmis restent dans les limites de l'écran
-            if ant.x < 0 :
-                ant.x = width
-            if ant.x > width :
-                ant.x = 0
-            if ant.y < 0 :
-                ant.y = height
-            if ant.y > height:
-                ant.y = 0
-
+        for colonie in colonies:
+            colonie.move(screen)
 
         # Mettre à jour l'affichage
         pygame.display.flip()
