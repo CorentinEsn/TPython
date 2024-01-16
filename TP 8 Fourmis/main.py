@@ -4,6 +4,7 @@ import threading
 
 import pygame
 from fourmis import Fourmi
+from Colonie import Colonie
 
 # Initialisation de Pygame
 pygame.init()
@@ -31,15 +32,17 @@ def main():
     ants = []
     nb_colonies = 4
     taille_colonie = 1
+    colonies = []
+    nb_colonies = 5
+    taille_colonie = 10
     for i in range(nb_colonies):
         random.color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
         for j in range(taille_colonie):
             ant = Fourmi(screen, random.color)
             ants.append(ant)
-            ant.paint(screen)
+        colonies.append(Colonie(screen, random.color, taille_colonie))
 
     while True:
-        print("iteration")
         for event in pygame.event.get():
             if event.type == pygame.QUIT or event.type == pygame.K_ESCAPE:
                 pygame.quit()
@@ -47,19 +50,10 @@ def main():
             if event.type == pygame.K_SPACE:
                 pygame.pause()
 
-        # convertur l'écran en tableau de pixels
-        pixels = pygame.PixelArray(screen)
 
         # Déplacement des fourmis
-        for ant in ants:
-            #threading.Thread(target=ant.move, args=(pixels), name="Fourmi_"+str(i)+","+str(j)).start()
-            ant.move(screen)
-
-
-
-
-        #threading.thread.join()
-
+        for colonie in colonies:
+            colonie.move(screen)
 
         # Mettre à jour l'affichage
         pygame.display.flip()
@@ -70,3 +64,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
