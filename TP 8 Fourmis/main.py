@@ -1,5 +1,7 @@
 import sys
 import random
+import threading
+
 import pygame
 from fourmis import Fourmi
 
@@ -18,6 +20,7 @@ black = (0, 0, 0)
 white = (255, 255, 255)
 red = (255, 0, 0)
 
+
 # Fonction principale
 def main():
     # Création de la fenêtre
@@ -26,15 +29,17 @@ def main():
     pygame.display.set_caption("Plateforme 2D pour les Fourmis")
 
     ants = []
-    nb_colonies = 5
-    taille_colonie = 10
+    nb_colonies = 4
+    taille_colonie = 1
     for i in range(nb_colonies):
         random.color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
-        for _ in range(taille_colonie):
+        for j in range(taille_colonie):
             ant = Fourmi(screen, random.color)
             ants.append(ant)
+            ant.paint(screen)
 
     while True:
+        print("iteration")
         for event in pygame.event.get():
             if event.type == pygame.QUIT or event.type == pygame.K_ESCAPE:
                 pygame.quit()
@@ -42,30 +47,26 @@ def main():
             if event.type == pygame.K_SPACE:
                 pygame.pause()
 
+        # convertur l'écran en tableau de pixels
+        pixels = pygame.PixelArray(screen)
 
         # Déplacement des fourmis
         for ant in ants:
+            #threading.Thread(target=ant.move, args=(pixels), name="Fourmi_"+str(i)+","+str(j)).start()
             ant.move(screen)
-            ant.paint(screen)
 
-            # Assurez-vous que les fourmis restent dans les limites de l'écran
-            if ant.x < 0 :
-                ant.x = width
-            if ant.x > width :
-                ant.x = 0
-            if ant.y < 0 :
-                ant.y = height
-            if ant.y > height:
-                ant.y = 0
+
+
+
+        #threading.thread.join()
 
 
         # Mettre à jour l'affichage
         pygame.display.flip()
 
         # Limiter la fréquence d'images
-        pygame.time.Clock().tick(30)
+        pygame.time.Clock().tick(2000)
 
 
 if __name__ == "__main__":
     main()
-
