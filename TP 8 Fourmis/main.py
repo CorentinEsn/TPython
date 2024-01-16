@@ -11,10 +11,10 @@ pygame.init()
 
 # Paramètres de la plateforme
 width, height = 500, 500
-bg_color = (255, 255, 255)  # Couleur de fond
+bg_color = (105,65,22)  # Couleur de fond
 
 # Paramètres des fourmis
-ant_size = 5
+ant_size = 4
 
 # Couleurs
 black = (0, 0, 0)
@@ -30,11 +30,9 @@ def main():
     pygame.display.set_caption("Plateforme 2D pour les Fourmis")
 
     ants = []
-    nb_colonies = 4
-    taille_colonie = 1
     colonies = []
-    nb_colonies = 5
-    taille_colonie = 10
+    nb_colonies = 3
+    taille_colonie = 2
     for i in range(nb_colonies):
         random.color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
         for j in range(taille_colonie):
@@ -59,7 +57,7 @@ def main():
         pygame.display.flip()
 
         # Limiter la fréquence d'images
-        pygame.time.Clock().tick(200)
+        pygame.time.Clock().tick(30)
 
 
 if __name__ == "__main__":

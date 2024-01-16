@@ -25,49 +25,52 @@ class Fourmi:
         self.size = 5 + 5 * random.randint(0, 1)
 
     def move(self, screen):
+        self.paint(screen, self.color)
         self.turn(screen)
         self.forward(screen)
-        self.paint(screen)
+        self.paint(screen, (255, 0, 0))
+
 
     def turn(self, screen):
         # Récupération des couleurs des cases voisines
-        print("old direction: ", self.direction)
-        couleur_voisins = []
-        possible_dir = []
-        height = screen.get_height()
-        width = screen.get_width()
+        voisins = []
+        weights = []
 
-        for i in range(1):
+        for i in range(2):
             if i == 0:
                 x = (self.x + self.direction_table[self.direction][0] * self.size)
                 y = (self.y + self.direction_table[self.direction][1] * self.size)
+                x, y = self.stay_in_bounds(x, y, screen)
+                voisins.append([screen.get_at((x, y)), self.direction])
             else:
-                x = (self.x + self.direction_table[self.direction+i][0] * self.size)
-                y = (self.y + self.direction_table[self.direction+i][1] * self.size)
+                x = (self.x + self.direction_table[(self.direction+i)%8][0] * self.size)
+                y = (self.y + self.direction_table[(self.direction+i)%8][1] * self.size)
+                x, y = self.stay_in_bounds(x, y, screen)
+                voisins.append([screen.get_at((x, y)), (self.direction+i)%8])
+                x = (self.x + self.direction_table[(self.direction-i)%8][0] * self.size)
+                y = (self.y + self.direction_table[(self.direction-i)%8][1] * self.size)
+                x, y = self.stay_in_bounds(x, y, screen)
+                voisins.append([screen.get_at((x, y)), (self.direction-i)%8])
 
-            x, y = self.stay_in_bounds(x, y, screen)
-            couleur_voisins.append(screen.get_at((x, y)))
+        #calcul la distance de la couleur de la fourmi avec les couleurs des cases voisines
+        for v in voisins:
+            # si la couleur du voisins est la même que la couleur de la fourmi, on lui donne un poids de 0
+            if v[0] == self.color:
+                weights.append(1)
+            else : weights.append(1/(math.sqrt((self.color[0] - v[0][0])**2 + (self.color[1] - v[0][1])**2 + (self.color[2] - v[0][2])**2)+1))
 
-        for couleur in couleur_voisins:
-            if couleur == self.color:
-                possible_dir.append(couleur_voisins.index(couleur))
-                break
-        #choisit une direction aléatoirement parmis les directions possibles
-        if possible_dir != []:
-            random.shuffle(possible_dir)
-            self.direction = random.choice(possible_dir)
-        else:
-            self.direction += random.choice([-1, 1])
-            self.direction %= 8
-        print("new direction: ", self.direction)
+        #choisit une direction aléatoirement parmis les voisins
+        selected_v = random.choices(voisins, weights)
+        self.direction = selected_v[0][1]
 
-    def turn2(self, screen):
-        self.direction += random.choice([-1, 1])
+
+    def random_turn(self, screen):
+        self.direction += random.choice([-1, 0, 1])
         self.direction %= 8
 
-    def paint(self, screen):
+    def paint(self, screen, color):
         # Dessine la fourmi
-        pygame.draw.circle(screen, self.color, (self.x, self.y), self.size//2)
+        pygame.draw.circle(screen, color, (self.x, self.y), self.size//2)
 
     def forward(self, screen):
         width = screen.get_width()
@@ -78,11 +81,6 @@ class Fourmi:
         x, y = self.stay_in_bounds(x, y, screen)
         self.x = x
         self.y = y
-
-
-
-    def erase(self, screen, bg_color):
-        pygame.draw.circle(screen, bg_color, (self.x, self.y), self.size)
 
     def stay_in_bounds(self, x, y, screen):
         width = screen.get_width()

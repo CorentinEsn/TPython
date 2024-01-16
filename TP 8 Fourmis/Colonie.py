@@ -12,12 +12,3 @@ class Colonie:
     def move(self, screen):
         for ant in self.ants:
             ant.move(screen)
-            # Assurez-vous que les fourmis restent dans les limites de l'écran
-            if ant.x < 0:
-                ant.x = screen.get_width()
-            if ant.x > screen.get_width():
-                ant.x = 0
-            if ant.y < 0:
-                ant.y = screen.get_height()
-            if ant.y > screen.get_height():
-                ant.y = 0
