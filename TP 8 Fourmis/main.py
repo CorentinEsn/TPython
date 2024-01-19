@@ -10,7 +10,7 @@ from Colonie import Colonie
 pygame.init()
 
 # Paramètres de la plateforme
-width, height = 500, 500
+width, height = 1080, 720
 bg_color = (105,65,22)  # Couleur de fond
 
 # Paramètres des fourmis
@@ -31,8 +31,8 @@ def main():
 
     ants = []
     colonies = []
-    nb_colonies = 3
-    taille_colonie = 2
+    nb_colonies = 5
+    taille_colonie = 5
     for i in range(nb_colonies):
         random.color = (random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
         for j in range(taille_colonie):
@@ -48,7 +48,8 @@ def main():
             if event.type == pygame.K_SPACE:
                 pygame.pause()
 
-
+        # copier l'écran
+        copy_of_screen = screen.copy()
         # Déplacement des fourmis
         for colonie in colonies:
             colonie.move(screen)
@@ -57,7 +58,7 @@ def main():
         pygame.display.flip()
 
         # Limiter la fréquence d'images
-        pygame.time.Clock().tick(30)
+        pygame.time.Clock().tick(240)
 
 
 if __name__ == "__main__":
